@@ -8,6 +8,7 @@
 ## 二、添加 Secret
 
 **`Settings`->`Secrets`->`New secret`，添加以下Secret：**
+
 - `Conf`：其值如下：
     ```json
     {
@@ -22,7 +23,7 @@
     		}
     	],
     	"ScKey": "", //server酱sckey，不填不开启
-    	"ScType": "Failed", //通知类型. Always:始终通知; Failed:失败时通知; 不填/其他:不通知;
+    	"ScType": "", //通知类型. Always:始终通知; Failed:失败时通知; 不填/其他:不通知;
     	"RdsServer": "xxx.redislabs.com:1234", //redis地址，选填
     	"RdsPwd": "ppp" //redis密码，选填
     }
