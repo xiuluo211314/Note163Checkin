@@ -122,7 +122,7 @@ async Task<string> Login(string username, string password)
     await page.TypeAsync(".login-password", password);
     await Task.Delay(5_000);
     await page.ClickAsync(".login-btn");
-    await page.WaitForSelectorAsync("#flexible-right", new WaitForSelectorOptions { Visible = true });
+    // await page.WaitForSelectorAsync("#flexible-right", new WaitForSelectorOptions { Visible = true });
 
     var client = await page.Target.CreateCDPSessionAsync();
     var ckObj = await client.SendAsync("Network.getAllCookies");
