@@ -1,4 +1,4 @@
-name: Run
+name: Auto_Sigin_163
 
 on:
   workflow_dispatch:
@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@main
+    - name: 'checkout codes'
+      uses: actions/checkout@main
     - name: Run
       uses: GabrielBB/xvfb-action@v1
       with:
