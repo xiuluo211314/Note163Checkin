@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.29" />
     <PackageReference Include="PuppeteerSharp" Version="6.2.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.5.43" />
   </ItemGroup>
