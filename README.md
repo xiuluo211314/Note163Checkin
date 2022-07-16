@@ -65,8 +65,8 @@
 <br>
 
 - 步骤图示如下：
-- <img src="./images/2.png" alt="" width="800px">
-- <img src="./images/3.png" alt="" width="800px">
+  <img src="./images/2.png" alt="" width="800px">
+  <img src="./images/3.png" alt="" width="800px">
 <br>
 
 #### 3. 运行Action
@@ -76,8 +76,8 @@
 
 **注意**：
 1. 本项目已经设置**自动运行**，详情见文件[.github/workflows/main.yml](./.github/workflows/main.yml)。
-	>schedule:
-    >  -- cron: '30 1,6 * * *' # 每天9:30, 14:30执行，时间为国际标准时间 + 8 =北京时间！！
+	> schedule: 
+    > 	-- cron: '30 1,6 * * *' # 每天9:30, 14:30执行，时间为国际标准时间 + 8 =北京时间！！
 2. 目前执行Action有三种方式：
 	> push代码执行(已注释)
 	> workflow手动执行
