@@ -1,6 +1,7 @@
 name: Auto_Sigin_163
 
 on:
+  push:
   workflow_dispatch:
   # repository_dispatch:
   schedule:
