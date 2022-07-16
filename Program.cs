@@ -34,11 +34,16 @@ namespace NOTE163CHECKIN{
         //     // int rowNum = (int)mySqlDatabase.executeScript(sql);
         //     // Console.WriteLine("dddddd:" + rowNum.ToString());
 
-        //     decimal tmp = 3290431488;
-        //     float res = MathF.Round(((float)tmp / 1024 / 1024 / 1024),5);
-        //     Console.WriteLine(res);
+        //     // decimal tmp = 3290431488;
+        //     // float res = MathF.Round(((float)tmp / 1024 / 1024 / 1024),5);
+        //     // Console.WriteLine(res);
         //     // {"total":10485760,"time":1657904760924,"success":0,"space":2097152}
+        //     // DateTime currentTime = System.DateTime.UtcNow; // o时区时间
+        //     // String format = "yyyy-MM-dd HH:mm:ss";
+        //     // currentTime = currentTime.AddHours(8);//转化为北京时间(北京时间=UTC时间+8小时 )            
 
+        //     // String dateStr = currentTime.ToString(format);
+        //     // Console.WriteLine(dateStr);
         // }
 
     }
