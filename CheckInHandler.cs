@@ -3,12 +3,12 @@ using System.Text;
 using System.Text.Json;
 
 public class CheckInHandler{
-        public CheckInHandler(HttpClient _scClient) 
-        {
-            this._scClient = _scClient;
+    public CheckInHandler(HttpClient _scClient) 
+    {
+        this._scClient = _scClient;
    
-        }
-            private HttpClient _scClient{get; set;}
+    }
+    private HttpClient _scClient{get; set;}
     private Conf _conf{get; set;}
     private RedisDatabase redisDatabase;
     private Note163HttpTool note163HttpTool = new Note163HttpTool();
