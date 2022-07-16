@@ -244,6 +244,7 @@ public class CheckInHandler{
         }else{
             Console.WriteLine($"MySql保存数据成功，条数是：{rowNum}!");
         }
+        Console.WriteLine("------------------------------分割线-----------------------------------");
 
     }
 
