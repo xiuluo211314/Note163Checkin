@@ -3,6 +3,8 @@ name: Auto_Sigin_163
 on:
   workflow_dispatch:
   repository_dispatch:
+  schedule:
+    - cron: '04 1,8 * * *' # 每天9:30, 14:30执行，时间为国际标准时间 + 8 =北京时间！！
 
 jobs:
   build:
