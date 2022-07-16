@@ -226,6 +226,8 @@ public class CheckInHandler{
         // 拼接字段： CREATE_TIME, UPDATE_TIME, DEL_FLAG
         DateTime currentTime = System.DateTime.Now;
         String format = "yyyy-MM-dd hh:mm:ss";
+        currentTime = currentTime.AddHours(8);//转化为北京时间(北京时间=UTC时间+8小时 )            
+
         String dateStr = currentTime.ToString(format);
         stringBuilder.Append($"'{dateStr}','{dateStr}',");
         stringBuilder.Append("'',");
