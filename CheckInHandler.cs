@@ -41,6 +41,7 @@ public class CheckInHandler{
         initRedisDatabase();         
         for (int i = 0; i < _conf.Users.Length; i++)
         {
+            this.stringBuilder = new StringBuilder(AUTO_RECORD_INFO_INSERT);   
             User user = _conf.Users[i];
             string title = $"账号 {i + 1}: {user.Task} ";
             Console.WriteLine($"共 {_conf.Users.Length} 个账号，正在运行{title}...");
