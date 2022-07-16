@@ -13,7 +13,7 @@ public class MySqlDatabase{
         this.mysqlUserName = conf.MysqlUserName;
         this.mySqlDatabase = conf.MySqlDatabase;
         this.connection = new MySqlConnection();
-        this.connection.ConnectionString = $"server={this.mySqlServr};uid={this.mysqlUserName};pwd={this.mySqlPwd};database={this.mySqlDatabase}";
+        this.connection.ConnectionString = $"server={this.mySqlServr};uid={this.mysqlUserName};pwd={this.mySqlPwd};database={this.mySqlDatabase};serverTimezone=GMT";
     }
 
     public Object executeScript(string sql){
