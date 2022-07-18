@@ -24,22 +24,19 @@ namespace NOTE163CHECKIN{
         }
 
         static string readJsonFile(string jsonFilePath){
-            if(File.Exists(jsonFilePath)){
-                throw new FileNotFoundException("conf/conf.json文件未配置！");
+            string exactPath = Path.GetFullPath(jsonFilePath);
+            if(!File.Exists(exactPath)){
+                throw new FileNotFoundException("conf/conf.json文件不存在！");
             }
-            StringBuilder stringBuilder = new StringBuilder();
-             //读取文件内容
-            using (FileStream fs = File.OpenRead(jsonFilePath))
+            string json = null;
+            using (FileStream fs = new FileStream(jsonFilePath, FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite, FileShare.ReadWrite))
             {
-                byte[] b = new byte[1024];
-                UTF8Encoding temp = new UTF8Encoding(true);
-                while (fs.Read(b,0,b.Length) > 0)
+                using (StreamReader sr = new StreamReader(fs, Encoding.UTF8))
                 {
-                    // Console.WriteLine(temp.GetString(b));
-                    stringBuilder.Append(temp.GetString(b));
+                    json = sr.ReadToEnd().ToString();
                 }
             }
-            return stringBuilder.ToString();
+            return json;
         }
 
         static T Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
