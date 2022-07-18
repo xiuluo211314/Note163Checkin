@@ -38,7 +38,8 @@
 
 - CONF配置参考如下：
     ```json
-   {
+  	{
+		"ConfType":"ACTION_SECRET",//配置文件的类型，LOCAL_FILE: 表示conf文件夹下的conf.json文件；ACTION_SECRET:表示配置在github-action中的secret
 		"Users": [{
 				"Task": "CC", //自定义名字，选填
 				"Username": "abc@163.com", //账号
@@ -62,6 +63,7 @@
     1. 支持`多账号`签到
     2. `RdsServer`和`RdsPwd`是选填的，用于配置redis，来存储cookie。后续可以重用这个cookie，避免频繁登录账号。建议配置一下，可以使用[redislabs](https://app.redislabs.com/)的免费套餐。
     3. 支持`MySql`数据存存储数据，建表语句见[AUTO_RECORD_INFO](./images/AUTO_RECORD_INFO.sql)
+    4. 支持本地运行项目（conf/conf.json文件中`ConfType`配置成`LOCAL_FILE`,再配置其他项)；Github-Action运行的话`ConfType`配置成`ACTION_SECRET`
 <br>
 
 - 步骤图示如下：
