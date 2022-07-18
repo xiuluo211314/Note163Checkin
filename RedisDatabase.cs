@@ -20,14 +20,19 @@ public class RedisDatabase : IMyDatabase{
     }
     public bool checkDb(){
          if(this.db == null){
-            throw new RedisConnectionException(ConnectionFailureType.UnableToConnect, "不能连接上redis");
+            // throw new RedisConnectionException(ConnectionFailureType.UnableToConnect, "不能连接上redis");
+            return false;
         }
         return true;
     }
 
     public bool isConnected(object obj)
     {
-        checkDb();
+        bool checkRes = checkDb();
+        if(!checkRes)
+        {
+            return false;
+        }
         string content = (string) obj;
         bool res = db.IsConnected(content);
         Console.WriteLine("redis连接状态:{0}", res ? "有效" : "无效");
