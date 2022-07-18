@@ -1,5 +1,5 @@
 {
-    "ConfType":"LOCAL_FILE",//配置文件的类型，LOCAL_FILE: 表示conf文件夹下的conf.json文件；ACTION_SECRET:表示配置在github-action中的secret
+    "ConfType":"ACTION_SECRET",//配置文件的类型，LOCAL_FILE: 表示conf文件夹下的conf.json文件；ACTION_SECRET:表示配置在github-action中的secret
 	"Users": [{
 			"Task": "CC", //自定义名字，选填
 			"Username": "abc@163.com", //账号

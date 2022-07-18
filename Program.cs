@@ -1,12 +1,46 @@
 ﻿using Newtonsoft.Json.Linq;
 using PuppeteerSharp;
 using StackExchange.Redis;
+using System.Text;
 using System.Text.Json;
 
 namespace NOTE163CHECKIN{
     class Program{
 
-        static string GetEnvValue(string key) => Environment.GetEnvironmentVariable(key);
+        static string defaultConfFile = "conf/conf.json";
+        // static string GetEnvValue(string key) => Environment.GetEnvironmentVariable(key);
+        static string GetEnvValue(string key){
+            string confJson = readJsonFile(defaultConfFile);
+            Conf tmpConf = Deserialize<Conf>(confJson); 
+            if(tmpConf != null){
+                if(tmpConf.ConfType == "LOCAL_FILE")
+                {
+                    return confJson; // 本地的配置文件
+                }else if(tmpConf.ConfType == "ACTION_SECRET"){
+                    return Environment.GetEnvironmentVariable(key); // github-action中使用，返回secrit
+                }
+            }
+            throw new Exception("json字符串反序列化成对象失败！！");
+        }
+
+        static string readJsonFile(string jsonFilePath){
+            if(File.Exists(jsonFilePath)){
+                throw new FileNotFoundException("conf/conf.json文件未配置！");
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+             //读取文件内容
+            using (FileStream fs = File.OpenRead(jsonFilePath))
+            {
+                byte[] b = new byte[1024];
+                UTF8Encoding temp = new UTF8Encoding(true);
+                while (fs.Read(b,0,b.Length) > 0)
+                {
+                    // Console.WriteLine(temp.GetString(b));
+                    stringBuilder.Append(temp.GetString(b));
+                }
+            }
+            return stringBuilder.ToString();
+        }
 
         static T Deserialize<T>(string json) => JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
         {
