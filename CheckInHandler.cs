@@ -37,6 +37,7 @@ public class CheckInHandler{
         if(this._conf.Users == null || this._conf.Users.Length == 0){
             throw new Exception("CONF配置文件信息中，不包含Users数组信息!");
         }
+        List<string> noticeInfos = new List<string>();
 
         initRedisDatabase();         
         for (int i = 0; i < _conf.Users.Length; i++)
@@ -70,14 +71,21 @@ public class CheckInHandler{
             // redis中的cookie不可用的话，需要模拟登陆login获取最新的cookie
             if(isInvalid){
                 // 登陆网页，获取最新的cookie
-                cookie = await this.note163HttpTool.Login(user.Username, user.Password);
-                // 调用每日打开客户端（即登陆）的api,判断cookie是否可用
-                (isInvalid, result) = await this.note163HttpTool.IsInvalid(cookie);
+                try{
+                    cookie = await this.note163HttpTool.Login(user.Username, user.Password);
+                    // 调用每日打开客户端（即登陆）的api,判断cookie是否可用
+                    (isInvalid, result) = await this.note163HttpTool.IsInvalid(cookie);
+                }catch(Exception e){
+                    Console.WriteLine(e.Message);
+                    isInvalid = true; 
+                }
                 Console.WriteLine("login登陆网页后获取cookie,状态:{0}", isInvalid ? "无效" : "有效");
                 if (isInvalid)
                 {
-                    //Cookie失效， 发送通知
-                    await Notify($"{title}Cookie失效，请检查登录状态！", true);
+                    //Cookie失效
+                    string noticeInfo = $"{title}Cookie失效，请检查登录状态！";
+                    noticeInfos.Add(noticeInfo);
+                    // await Notify(noticeInfo, true);  结束后统一通知
                     continue;
                 }
                 
@@ -162,7 +170,9 @@ public class CheckInHandler{
             }
             Console.WriteLine("D-ALL" +  ".看广告视频api的总结果，增加存储空间:" + (space / SQUARE_1024).ToString() + "M");
 
-            await Notify($"有道云笔记{title}签到成功，共获得空间 {space / SQUARE_1024} M");
+            // await Notify($"有道云笔记{title}签到成功，共获得空间 {space / SQUARE_1024} M");
+            string tmpNoticeInfo = $"有道云笔记{title}签到成功，共获得空间 {space / SQUARE_1024} M";
+            noticeInfos.Add(tmpNoticeInfo);
             stringBuilder.Append($"'{space / SQUARE_1024}',");
             stringBuilder.Append($"'{user.Task}',");
             // E. 查看签到后的空间
@@ -201,6 +211,14 @@ public class CheckInHandler{
             }else{
                 persistToMysql(stringBuilder);
             }
+        }
+        if(noticeInfos.Count > 0){
+            string joins = "【有道云签到】:";
+            foreach(string each in noticeInfos){
+                joins = joins + each + ";";
+            }
+            await Notify(joins, true);
+            
         }
         Console.WriteLine("签到运行完毕---end");
         return "success";
@@ -262,12 +280,15 @@ public class CheckInHandler{
     /// <param name="msg"></param>
     /// <param name="isFailed"></param>
     /// <returns></returns>
-    async Task Notify(string msg, bool isFailed = false)
+    public async Task Notify(string msg, bool isFailed = false)
     {
         Console.WriteLine(msg);
         if (this._conf.ScType == "Always" || (isFailed && this._conf.ScType == "Failed"))
         {
-            await _scClient?.GetAsync($"https://sc.ftqq.com/{_conf.ScKey}.send?text={msg}");
+            Console.WriteLine("【Notice通知】:" + msg);
+            string encode = System.Web.HttpUtility.UrlEncode(msg);
+            string msgTitle = "签到通知"; 
+            await _scClient?.GetAsync($"https://sctapi.ftqq.com/{_conf.ScKey}.send?title={msgTitle}&desp={encode}");
         }
     }
 

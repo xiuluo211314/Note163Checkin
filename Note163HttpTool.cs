@@ -59,7 +59,7 @@ public class Note163HttpTool{
         await page.WaitForSelectorAsync(".login-btn", new WaitForSelectorOptions { Visible = true });
         await page.TypeAsync(".login-username", username);
         await page.TypeAsync(".login-password", password);
-        await Task.Delay(5_000);
+        // await Task.Delay(5_000);
         await page.ClickAsync(".login-btn");
 
         await page.WaitForSelectorAsync("#flexible-right", new WaitForSelectorOptions { Visible = true });
